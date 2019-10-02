@@ -1,0 +1,36 @@
+From d32c537672f4797ac4e6d5e8ed754da3b4cf3863 Mon Sep 17 00:00:00 2001
+From: KOLANICH <KOLANICH@users.noreply.github.com>
+Date: Thu, 28 Nov 2019 11:17:04 +0300
+Subject: [PATCH] Added packaging
+
+---
+ libcomps/CMakeLists.txt | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/libcomps/CMakeLists.txt b/libcomps/CMakeLists.txt
+index d8d628a..0b14d5e 100644
+--- a/libcomps/CMakeLists.txt
++++ b/libcomps/CMakeLists.txt
+@@ -69,3 +69,19 @@ endif ()
+ if (ENABLE_DOCS)
+     add_subdirectory (docs EXCLUDE_FROM_ALL)
+ endif (ENABLE_DOCS)
++
++set(CPACK_PACKAGE_NAME libcomps)
++set(CPACK_PACKAGE_VERSION_MAJOR "${libcomps_VERSION_MAJOR}")
++set(CPACK_PACKAGE_VERSION_MINOR "${libcomps_VERSION_MINOR}")
++set(CPACK_PACKAGE_VERSION_PATCH "${libcomps_VERSION_PATCH}")
++
++set(CPACK_PACKAGE_VENDOR "Red Hat")
++set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Libcomps is alternative for yum.comps library. It's written in pure C as library and there's bindings for python2 and python3.")
++set(CPACK_PACKAGE_HOMEPAGE_URL "https://github.com/rpm-software-management/libcomps")
++set(CPACK_PACKAGE_CONTACT "https://github.com/rpm-software-management/libcomps")
++set(CPACK_PACKAGE_CHECKSUM "SHA512")
++set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/../COPYING")
++set(CPACK_GENERATOR "DEB")
++get_cmake_property(CPACK_COMPONENTS_ALL COMPONENTS)
++list(REMOVE_ITEM CPACK_COMPONENTS_ALL "Unspecified")
++include(CPack)
+-- 
+2.20.1
+

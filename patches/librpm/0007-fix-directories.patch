@@ -1,0 +1,57 @@
+From f9185a5cc5a39cca80f1ad40727fae4834fabc33 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Michal=20=C4=8Ciha=C5=99?= <nijel@debian.org>
+Date: Wed, 11 Dec 2019 16:01:18 +0300
+Subject: [PATCH] Fix installation directories - Do not install rpm to /bin/. -
+ Setup default directories so that source RPMs rebuilt on Debian get the right
+ directories and also that builds occur in /usr/src/rpm - Fix statedir and
+ init.d patch
+
+https://salsa.debian.org/pkg-rpm-team/rpm/raw/master/debian/patches/fix-directories.patch
+---
+ doc/manual/builddependencies | 2 +-
+ macros.in                    | 2 +-
+ platform.in                  | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/doc/manual/builddependencies b/doc/manual/builddependencies
+index a3938fdb8..4c3730d25 100644
+--- a/doc/manual/builddependencies
++++ b/doc/manual/builddependencies
+@@ -29,7 +29,7 @@ while building gnorpm using InDependence:
+ \verbatim
+ 	rpm -U /mnt/redhat/comps/powertools/6.2/i386/InDependence-1.0-3.i386.rpm
+ 	rpm -i /mnt/redhat/comps/dist/6.2/SRPMS/gnorpm-0.9-11.src.rpm
+-	cd /usr/src/redhat/SPECS
++	cd /usr/src/rpm/SPECS
+ 	dep -detail rpmbuild -ba gnorpm.spec >& xxx
+ 	...
+ 	(the build will take longer since both dep and strace are pigs)
+diff --git a/macros.in b/macros.in
+index 4f7efb2ae..b9ea654fe 100644
+--- a/macros.in
++++ b/macros.in
+@@ -985,7 +985,7 @@ package or when debugging this package.\
+ %_datadir		%{_prefix}/share
+ %_sysconfdir		/etc
+ %_sharedstatedir	%{_prefix}/com
+-%_localstatedir		%{_prefix}/var
++%_localstatedir		@localstatedir@
+ %_lib			lib
+ %_libdir		%{_exec_prefix}/%{_lib}
+ %_includedir		%{_prefix}/include
+diff --git a/platform.in b/platform.in
+index 61f5e18a0..1bca26bae 100644
+--- a/platform.in
++++ b/platform.in
+@@ -41,7 +41,7 @@
+ %_oldincludedir		@oldincludedir@
+ %_infodir		@infodir@
+ %_mandir		@mandir@
+-%_initddir		%{_sysconfdir}/rc.d/init.d
++%_initddir		%{_sysconfdir}/init.d
+ # Deprecated misspelling, present for backwards compatibility.
+ %_initrddir		%{_initddir}
+ %_rundir		@RUNDIR@
+-- 
+2.20.1
+

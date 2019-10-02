@@ -1,0 +1,26 @@
+From eb36b14d5c61652f4606d505f3775bc6a1a98e01 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Michal=20=C4=8Ciha=C5=99?= <nijel@debian.org>
+Date: Wed, 11 Dec 2019 16:09:35 +0300
+Subject: [PATCH] In Debian, lua library is called lua5.3.
+
+https://salsa.debian.org/pkg-rpm-team/rpm/raw/master/debian/patches/lua-libname.patch
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 0257ddeef..d5798deb2 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1009,7 +1009,7 @@ AC_ARG_WITH([lua], [AS_HELP_STRING([--with-lua], [build with lua support])],
+ 
+ AS_IF([test "$with_lua" != no],[
+   PKG_CHECK_MODULES([LUA],
+-    [lua >= 5.1],
++    [lua5.3 >= 5.3],
+     [AC_DEFINE(WITH_LUA, 1, [Build with lua support?])],
+     [AC_MSG_ERROR([lua not present (--without-lua to disable)])])
+   AC_SUBST(LUA_CFLAGS)
+-- 
+2.20.1
+
